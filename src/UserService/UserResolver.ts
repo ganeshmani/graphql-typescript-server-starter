@@ -11,19 +11,19 @@ import UserSchema from "./UserSchema";
 import UserResponse from "./UserResponse";
 import { IUser, IUserResponse } from "./UserModel";
 import * as bcrypt from "bcryptjs";
+import { UserService } from "./UserService";
 
 @Resolver((of) => UserSchema)
 export class UserResolver {
-  @Query(() => String)
-  sample(): String {
-    return "Hello";
-  }
+  constructor(private readonly userService: UserService) {}
 
   @Query((returns) => UserSchema, { nullable: true })
-  async userByID(@Arg("id") id: string, @Ctx() ctx: any): Promise<IUser> {
-    const userCollection = await ctx.userModel.findOne({ _id: id });
-
-    return userCollection;
+  async userByID(
+    @Arg("id") id: string,
+    @Ctx() ctx: any
+  ): Promise<IUser | null> {
+    const user = await this.userService.getById(id);
+    return user;
   }
 
   @Query((returns) => UserResponse)
@@ -32,14 +32,12 @@ export class UserResolver {
     @Arg("password") password: string,
     @Ctx() ctx: any
   ): Promise<UserResponse> {
-    const user = await ctx.userModel.findOne({
-      email: email,
-    });
+    const user = await this.userService.getByEmail(email);
 
     if (user) {
-      const { err } = await bcrypt.compare(password, user.password);
+      const response = await bcrypt.compare(password, user.password);
 
-      if (!!err) {
+      if (!response) {
         return {
           success: false,
           error: "Invalid Credetials",
@@ -70,12 +68,12 @@ export class UserResolver {
   ): Promise<IUser> {
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const user = await new ctx.userModel({
+    const user = await this.userService.insertUser({
       name,
       email,
       password: hashedPassword,
     });
 
-    return user.save();
+    return user;
   }
 }

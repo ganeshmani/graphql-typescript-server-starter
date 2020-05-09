@@ -8,7 +8,6 @@ type Mutation {
 }
 
 type Query {
-  sample: String
   userByID(id: String): User
   loginUser(password: String, email: String): UserResponse
 }

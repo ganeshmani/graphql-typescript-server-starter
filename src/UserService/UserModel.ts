@@ -1,10 +1,12 @@
 import * as Mongoose from "mongoose";
 
 export interface IUser extends Mongoose.Document {
-  name: String;
-  email: String;
-  password: String;
+  name: string;
+  email: string;
+  password: string;
 }
+
+export interface IUserModel extends Mongoose.Model<IUser> {}
 
 export interface IUserResponse {
   success: boolean;

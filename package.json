@@ -33,6 +33,7 @@
     "graphql": "^14.6.0",
     "mongoose": "^5.9.10",
     "reflect-metadata": "^0.1.13",
-    "type-graphql": "^0.17.6"
+    "type-graphql": "^0.17.6",
+    "typedi": "^0.8.0"
   }
 }

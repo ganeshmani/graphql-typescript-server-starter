@@ -5,6 +5,9 @@ import { buildSchema } from "type-graphql";
 import UserModel from "./UserService/UserModel";
 import { UserResolver } from "./UserService/UserResolver";
 import * as Mongoose from "mongoose";
+import { Container } from "typedi";
+
+Container.set({ id: "USER", factory: () => UserModel });
 
 async function startServer() {
   require("dotenv").config(__dirname + ".env");
@@ -13,6 +16,7 @@ async function startServer() {
     resolvers: [UserResolver],
     emitSchemaFile: true,
     nullableByDefault: true,
+    container: Container,
   });
 
   const app = Express();
