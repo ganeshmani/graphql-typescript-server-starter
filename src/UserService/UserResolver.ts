@@ -59,13 +59,13 @@ export class UserResolver {
     }
   }
 
-  @Mutation(() => UserSchema)
+  @Mutation(() => UserResponse)
   async registerUser(
     @Arg("name") name: string,
     @Arg("email") email: string,
     @Arg("password") password: string,
     @Ctx() ctx: any
-  ): Promise<IUser> {
+  ): Promise<UserResponse> {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const user = await this.userService.insertUser({
@@ -74,6 +74,10 @@ export class UserResolver {
       password: hashedPassword,
     });
 
-    return user;
+    return {
+      success: true,
+      error: null,
+      data: user,
+    };
   }
 }

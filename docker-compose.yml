@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  web:
+    image: type-graphql-01
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: 4000
+      MONGODB_USER: root
+      MONGODB_PASS: Root!23456

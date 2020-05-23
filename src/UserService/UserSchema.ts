@@ -1,5 +1,6 @@
 import { Field, ObjectType, ID } from "type-graphql";
 import { IsEmail, Length } from "class-validator";
+import "reflect-metadata";
 
 @ObjectType({ description: "User Schema" })
 export default class User {

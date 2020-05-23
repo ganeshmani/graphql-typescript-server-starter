@@ -4,7 +4,7 @@
 # -----------------------------------------------
 
 type Mutation {
-  registerUser(password: String, email: String, name: String): User
+  registerUser(password: String, email: String, name: String): UserResponse
 }
 
 type Query {
