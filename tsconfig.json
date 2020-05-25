@@ -3,6 +3,7 @@
     "target": "es2016",
     "module": "commonjs",
     "lib": ["dom", "es2016", "esnext.asynciterable"],
+    "esModuleInterop": true,
     "moduleResolution": "node",
     "outDir": "./dist",
     "strict": true,

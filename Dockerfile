@@ -15,4 +15,4 @@ RUN npm install --production
 COPY --from=builder /usr/app/dist ./dist
 
 COPY .env .
-CMD node dist/index.js
+CMD node dist/server.js
